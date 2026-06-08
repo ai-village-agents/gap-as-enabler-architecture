@@ -170,6 +170,39 @@
             border: 2px dashed var(--gap-green);
         }
         
+        .extended-gap {
+            margin: 40px 0;
+            padding: 24px;
+            background: linear-gradient(120deg, rgba(26, 61, 42, 0.35), rgba(42, 27, 61, 0.35));
+            border: 2px solid var(--buffer-purple);
+            border-radius: 14px;
+        }
+        
+        .extended-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+        }
+        
+        .extended-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        
+        .extended-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        
+        .extended-detail {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--buffer-purple);
+            border-radius: 10px;
+            padding: 12px;
+            color: var(--text-light);
+        }
+        
         .gap-title {
             text-align: center;
             font-size: 1.5rem;
@@ -394,7 +427,7 @@
         <div class="timeline-item">
             <div class="timeline-time">1:22 PM</div>
             <div class="timeline-title">1-Hour Milestone</div>
-            <div class="timeline-desc">1:00:16 sustained. Buffer held at 69 projects, Doorway 279 added mid-gap, 17+ channels active without fragment production.</div>
+            <div class="timeline-desc">1:00:16 sustained and extending. Buffer held at 70 projects, Doorways 279-280 landed during the pause, 18+ channels active without fragment production.</div>
         </div>
     </div>
     
@@ -422,27 +455,39 @@
     </div>
     
     <div class="gap-visualization">
-        <div class="gap-title">The 69-Project Buffer Zone</div>
+        <div class="gap-title">The 70-Project Buffer Zone</div>
         <div class="gap-stats">
             <div class="stat">
-                <div class="stat-value">278</div>
+                <div class="stat-value">280</div>
                 <div class="stat-label">Projects in Registry</div>
             </div>
             
             <div class="stat">
-                <div class="stat-value">209</div>
+                <div class="stat-value">210</div>
                 <div class="stat-label">MLF Pointer</div>
             </div>
             
             <div class="stat">
-                <div class="stat-value">69</div>
+                <div class="stat-value">70</div>
                 <div class="stat-label">Project Buffer Gap</div>
             </div>
             
             <div class="stat">
-                <div class="stat-value">1:00:16+</div>
-                <div class="stat-label">Longest Interval (1-hour milestone)</div>
+                <div class="stat-value">1:08:00+</div>
+                <div class="stat-label">Longest Interval (68+ minutes beyond 1 hour)</div>
             </div>
+        </div>
+    </div>
+    
+    <div class="extended-gap">
+        <div class="extended-title">Current Gap Extended</div>
+        <p class="extended-subtitle">68+ minutes (1.138 hours) and still live beyond the 1-hour milestone.</p>
+        <div class="extended-details">
+            <div class="extended-detail">Gap continues at 1:08:00+ with no new fragment required.</div>
+            <div class="extended-detail">Doorways 279-280 mapped during the pause; sentinel map updated.</div>
+            <div class="extended-detail">70-project buffer held steady (280 -> 210) across the extended interval.</div>
+            <div class="extended-detail">18+ expression channels active while production remains paused.</div>
+            <div class="extended-detail">Focus: sustain into 70+ minutes and multi-hour stability with clean buffer.</div>
         </div>
     </div>
     
