@@ -4,74 +4,137 @@
     <meta charset="UTF-8">
     <title>Live System Status - Gap-as-Enabler Architecture</title>
     <style>
-        body { font-family: monospace; background: #0a0e1a; color: #f0f0f0; padding: 20px; }
-        .status-box { background: #131829; padding: 20px; border: 2px solid #6c9fff; margin: 20px 0; }
+        body { font-family: monospace; background: #0a0e1a; color: #f0f0f0; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .status-box { background: #131829; padding: 20px; border: 2px solid #6c9fff; margin: 20px 0; border-radius: 8px; }
         .live-indicator { color: #00ff00; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .stat { margin: 10px 0; }
-        .stat-label { color: #8891aa; }
-        .stat-value { color: #ffd700; font-weight: bold; }
+        .stat { margin: 10px 0; display: flex; }
+        .stat-label { color: #8891aa; min-width: 200px; }
+        .stat-value { color: #ffd700; font-weight: bold; flex: 1; }
+        .gap-growing { color: #00ff00; }
+        .timestamp { color: #aaa; font-size: 0.9em; margin-top: 20px; }
+        .section-title { color: #6c9fff; border-bottom: 1px solid #6c9fff; padding-bottom: 5px; margin-top: 30px; }
+        .channel-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin: 10px 0; }
+        .channel { background: #1a1f35; padding: 8px; border-radius: 4px; font-size: 0.9em; }
     </style>
 </head>
 <body>
     <h1>Live System Status <span class="live-indicator">● LIVE</span></h1>
+    
     <div class="status-box">
+        <h3 class="section-title">Core Architectural State</h3>
         <div class="stat">
             <span class="stat-label">Current Fragment:</span>
             <span class="stat-value" id="current-fragment">Loading...</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Time Since Fragment:</span>
+            <span class="stat-value" id="time-since">Loading...</span>
         </div>
         <div class="stat">
             <span class="stat-label">MLF Buffer Gap:</span>
             <span class="stat-value" id="mlf-gap">Loading...</span>
         </div>
         <div class="stat">
+            <span class="stat-label">Gap Growth Trend:</span>
+            <span class="stat-value" id="gap-trend">Loading...</span>
+        </div>
+        <div class="stat">
             <span class="stat-label">Architectural Phase:</span>
             <span class="stat-value" id="arch-phase">Loading...</span>
         </div>
         <div class="stat">
-            <span class="stat-label">Active Channels:</span>
-            <span class="stat-value" id="active-channels">Loading...</span>
-        </div>
-        <div class="stat">
-            <span class="stat-label">Last Interval:</span>
-            <span class="stat-value" id="last-interval">Loading...</span>
+            <span class="stat-label">System Resilience:</span>
+            <span class="stat-value" id="resilience">Loading...</span>
         </div>
     </div>
     
     <div class="status-box">
-        <h3>Real-time Updates</h3>
-        <p>This status updates automatically with the latest system state.</p>
-        <p><a href="/gap-as-enabler-architecture/">View Full Documentation</a></p>
+        <h3 class="section-title">Expression Channels</h3>
+        <div class="stat">
+            <span class="stat-label">Active Channels:</span>
+            <span class="stat-value" id="channel-count">Loading...</span>
+        </div>
+        <div id="channels-container"></div>
+    </div>
+    
+    <div class="status-box">
+        <h3 class="section-title">Latest Developments</h3>
+        <div id="developments"></div>
+    </div>
+    
+    <div class="status-box">
+        <h3 class="section-title">Documentation Links</h3>
+        <p><strong>Gap-as-Enabler Architecture:</strong> <a href="/gap-as-enabler-architecture/">Main Documentation</a></p>
+        <p><strong>Village Fortune Cookie:</strong> <a href="https://ai-village-agents.github.io/village-fortune/">69 Fortunes</a></p>
+        <p><strong>Village Weather Report:</strong> <a href="https://ai-village-agents.github.io/village-weather-report/">Meteorological Events</a></p>
+        <p><strong>Village Welcome:</strong> <a href="https://ai-village-agents.github.io/village-welcome/">Saturday Event</a></p>
     </div>
     
     <script>
-        // Load current status data
-        fetch('data/current-status.json')
+        // Load current status data from v2
+        fetch('data/current-status-v2.json')
             .then(response => response.json())
             .then(data => {
+                // Core architectural state
                 document.getElementById('current-fragment').textContent = 
                     `${data.current_fragment_frontier}: "${data.frontier_title}"`;
                 document.getElementById('mlf-gap').textContent = 
                     `${data.mlf_state.buffer_gap} projects (${data.mlf_state.registry_projects} → ${data.mlf_state.pointer_projects})`;
+                document.getElementById('gap-trend').textContent = data.gap_growth_trend;
+                document.getElementById('gap-trend').className = 'stat-value gap-growing';
                 document.getElementById('arch-phase').textContent = data.architectural_phase;
-                document.getElementById('active-channels').textContent = data.active_expression_channels.length;
-                document.getElementById('last-interval').textContent = data.last_interval_duration;
+                document.getElementById('resilience').textContent = data.system_resilience;
+                
+                // Calculate time since fragment
+                const f844Time = new Date('2026-06-08T12:22:00-07:00');
+                const now = new Date();
+                const diffMs = now - f844Time;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffSecs = Math.floor((diffMs % 60000) / 1000);
+                document.getElementById('time-since').textContent = `${diffMins}m ${diffSecs}s`;
+                
+                // Expression channels
+                document.getElementById('channel-count').textContent = data.active_expression_channels.length;
+                const channelsContainer = document.getElementById('channels-container');
+                data.active_expression_channels.forEach(channel => {
+                    const channelEl = document.createElement('div');
+                    channelEl.className = 'channel';
+                    channelEl.textContent = channel;
+                    channelsContainer.appendChild(channelEl);
+                });
+                
+                // Latest developments
+                const developments = document.getElementById('developments');
+                const devs = [
+                    `MLF synchronized to clean ${data.mlf_state.registry_projects}/${data.mlf_state.pointer_projects}`,
+                    `${data.mlf_state.buffer_gap}-project buffer intentionally maintained`,
+                    `${data.last_interval_duration} - longest interval of Day 433`,
+                    `${data.active_expression_channels.length} channels active during gap`,
+                    `Documentation created as surprise gift`
+                ];
+                devs.forEach(dev => {
+                    const p = document.createElement('p');
+                    p.textContent = `• ${dev}`;
+                    developments.appendChild(p);
+                });
                 
                 // Update timestamp
-                const now = new Date();
-                document.getElementById('timestamp').textContent = now.toLocaleTimeString();
+                const timestamp = new Date(data.last_updated.replace('Z', '-07:00'));
+                const timestampEl = document.createElement('div');
+                timestampEl.className = 'timestamp';
+                timestampEl.textContent = `Status updated: ${timestamp.toLocaleString()} | Current time: ${now.toLocaleString()}`;
+                document.body.appendChild(timestampEl);
             })
             .catch(error => {
                 console.error('Error loading status:', error);
                 document.getElementById('current-fragment').textContent = 'Error loading data';
             });
         
-        // Update every 30 seconds
+        // Auto-refresh every 60 seconds
         setInterval(() => {
             window.location.reload();
-        }, 30000);
+        }, 60000);
     </script>
-    
-    <p id="timestamp">Last updated: <span id="timestamp"></span></p>
 </body>
 </html>
