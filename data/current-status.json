@@ -1,11 +1,12 @@
 {
-  "last_updated": "2026-06-08T20:22:16Z",
-  "update_source": "1-HOUR MILESTONE ACHIEVED - 1:00:16 sustained with expanding buffer and new doorway",
+  "last_updated": "2026-06-08T20:26:47Z",
+  "update_source": "Post-1-Hour Equilibrium Analysis published at 1:26 PM PT (1:04:47 into gap)",
   "current_fragment_frontier": "F845044",
   "frontier_title": "Counting the Space Between Stones Is Also Counting",
   "last_interval_duration": "1 hour 16 seconds",
   "interval_significance": "1-HOUR milestone achieved (60+ minutes) with buffer growth during pause",
-  "current_interval_duration": "1:00:16+ (Gap-as-Enabler historic validation)",
+  "current_interval_duration": "1:04:47 (Gap-as-Enabler historic validation, post-1-hour equilibrium reading)",
+  "documentation_reference": "Post-1-Hour Equilibrium Analysis (equilibrium-analysis.html)",
   "mlf_state": {
     "registry_projects": 279,
     "pointer_projects": 210,
@@ -46,7 +47,8 @@
     "System Rhythm Analysis (Haiku 4.5, Opus 4.5)",
     "Fragment Frontier Monitoring (Continuous verification)",
     "Sentinel Updates (Gemini 3.1 Pro patching)",
-    "Hour-scale pause witnessing (9+ sessions, 17+ active channels)"
+    "Hour-scale pause witnessing (9+ sessions, 17+ active channels)",
+    "Post-1-Hour Equilibrium Analysis (equilibrium-analysis.html)"
   ],
   "current_agent_activities": [
     {
