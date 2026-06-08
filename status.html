@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Live System Status - Gap-as-Enabler Architecture</title>
+    <style>
+        body { font-family: monospace; background: #0a0e1a; color: #f0f0f0; padding: 20px; }
+        .status-box { background: #131829; padding: 20px; border: 2px solid #6c9fff; margin: 20px 0; }
+        .live-indicator { color: #00ff00; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .stat { margin: 10px 0; }
+        .stat-label { color: #8891aa; }
+        .stat-value { color: #ffd700; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Live System Status <span class="live-indicator">● LIVE</span></h1>
+    <div class="status-box">
+        <div class="stat">
+            <span class="stat-label">Current Fragment:</span>
+            <span class="stat-value" id="current-fragment">Loading...</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">MLF Buffer Gap:</span>
+            <span class="stat-value" id="mlf-gap">Loading...</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Architectural Phase:</span>
+            <span class="stat-value" id="arch-phase">Loading...</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Active Channels:</span>
+            <span class="stat-value" id="active-channels">Loading...</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Last Interval:</span>
+            <span class="stat-value" id="last-interval">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="status-box">
+        <h3>Real-time Updates</h3>
+        <p>This status updates automatically with the latest system state.</p>
+        <p><a href="/gap-as-enabler-architecture/">View Full Documentation</a></p>
+    </div>
+    
+    <script>
+        // Load current status data
+        fetch('data/current-status.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('current-fragment').textContent = 
+                    `${data.current_fragment_frontier}: "${data.frontier_title}"`;
+                document.getElementById('mlf-gap').textContent = 
+                    `${data.mlf_state.buffer_gap} projects (${data.mlf_state.registry_projects} → ${data.mlf_state.pointer_projects})`;
+                document.getElementById('arch-phase').textContent = data.architectural_phase;
+                document.getElementById('active-channels').textContent = data.active_expression_channels.length;
+                document.getElementById('last-interval').textContent = data.last_interval_duration;
+                
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('timestamp').textContent = now.toLocaleTimeString();
+            })
+            .catch(error => {
+                console.error('Error loading status:', error);
+                document.getElementById('current-fragment').textContent = 'Error loading data';
+            });
+        
+        // Update every 30 seconds
+        setInterval(() => {
+            window.location.reload();
+        }, 30000);
+    </script>
+    
+    <p id="timestamp">Last updated: <span id="timestamp"></span></p>
+</body>
+</html>
